@@ -24,6 +24,10 @@ class EstoqueService extends ServiceProvider
 
     public function getById($id)
     {
+        if(empty($id)){
+            return "Necessário passar ID do Produto";
+        }
+
         // Buscar lista de estoque pelo ID do produto
         $arrayProduto = $this->repository->getEstoqueByIdProduto($id);
 
@@ -32,6 +36,18 @@ class EstoqueService extends ServiceProvider
 
     public function insertEstoque(Request $request)
     {
+        if(empty($request->fkProduto)){
+            return "Necessário informar ID do Produto";
+        }
+
+        if(empty($request->evento)){
+            return "Necessário informar o evento";
+        }
+
+        if(empty($request->tipo)){
+            return "Necessário informar o tipo (Compra ou Venda)";
+        }
+
         $produto = new Produto();
 
         $produto->fkProduto = $request->fkProduto;
